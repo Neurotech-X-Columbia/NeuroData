@@ -4,10 +4,8 @@ This repo contains documentation and utility scripts for data collection, cloud 
 
 [Dataset Link](https://redivis.com/workspace/datasets/5e8n-ctqvm09q7)
 
-### **Workflows**
-
 ### Data collection workflow:
-1. Design your data collection session. Prepare a stimulus script, location, and time. You may need at two laptops (one for data collection and one to provide stimulus).
+1. Design your data collection session. Prepare a stimulus script, location, and time. You may need two laptops (one for data collection and one to provide stimulus).
 2. Define session info JSON via collection GUI. See ObjectInfo.md for more about info JSON files.
     - Session parameters: subject name, project name, response type, stimulus type, block length, block count, and stim cycle
     - Hardware parameters: sampling rate, buffer size, headset configuration, headset model
@@ -15,7 +13,9 @@ This repo contains documentation and utility scripts for data collection, cloud 
     - Date
     - Time
 3. Proceed to collection. When complete, there will be a session folder containing the newly generated .csv file, its accompanying info file, and session log file.
-4. Supply session directory to upload script (upload_session.py) to store data on Columbia Data Platform.
+5. Supply session directory to upload script (upload_session.py) to store data on Columbia Data Platform.
+
+_**See the Collection folder of this repo for a detailed guide.**_
 
 ### Data retrieval:
 1. Decide which parameters are relevant.
