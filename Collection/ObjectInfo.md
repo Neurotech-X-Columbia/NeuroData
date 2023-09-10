@@ -1,5 +1,9 @@
 ## JSON Info Objects
-Every data collection session should have an accompanying JSON info object that contains metadata about the session. Below are examples of the expected format of these JSON info objects and a description of the required fields. Extra fields may be added as necessary as long as the required fields are satisfied. All info JSON keys and values should be strings (event the numbers). Info JSON objects can be created manually, but they will usually be created interactively through the collection GUI.
+Every data collection session should have an accompanying JSON info object that contains metadata about the session. 
+Below are examples of the expected format of these JSON info objects and a description of the required fields. 
+Extra fields may be added as necessary as long as the required fields are satisfied. All info JSON keys and values 
+should be strings (even the numbers). Info JSON objects can be created manually, but they will usually be created 
+interactively through the collection GUI.
 
 ## A note on blocks, block length, and the stim cycle.
 To standardize the description of how each data session is carried out, we split one data collection
