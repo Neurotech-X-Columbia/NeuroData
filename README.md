@@ -54,10 +54,10 @@ Stores all sessions as files with file IDs that correspond to a row in session t
 - If you haven't already, [install](https://docs.conda.io/projects/miniconda/en/latest/index.html) the Conda package and environment management system for your operating system. Miniconda is recommended, but full Anaconda will also work.
 - On Windows, open an Anaconda Prompt or an Anaconda Powershell from the start menu and navigate to where this repo is cloned.
 - On Mac/Linux, open a terminal and navigate to where this repo is cloned.
-- Create a new environment with `conda create env -f environment.yml`
+- Create a new environment with `conda env create -f environment.yml`
 - If environment setup or package installation fails, try
-  - updating conda
-  - updating pip
+  - updating conda with `conda update conda`
+  - updating pip with `conda upgrade pip`
   - installing packages without specific version numbers
 - Activate environment with `conda activate data-env`
 
