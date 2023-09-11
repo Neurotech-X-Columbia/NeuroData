@@ -4,15 +4,19 @@ import time
 import simplejson as json
 
 from PyQt5.QtWidgets import (QWidget, QGridLayout, QVBoxLayout, QOpenGLWidget)
-from PyQt5.QtCore import QThread, Qt, QRectF, pyqtSignal
+from PyQt5.QtCore import Qt, QRectF, QObject, pyqtSignal
 from PyQt5.QtGui import QColor, QPainter, QPainterPath, QBrush, QFont, QSurfaceFormat
+from threading import Thread
+from time import sleep
 
 
-class FlashingThread(QThread):
+class FlashingThread(Thread, QObject):
     flash_signal = pyqtSignal()
 
     def __init__(self, frequency):
         super().__init__()
+        super(QObject, self).__init__()
+        self.daemon = True
         self.frequency = frequency
         self.is_running = True
 
@@ -20,7 +24,8 @@ class FlashingThread(QThread):
         interval = 1 / (2 * self.frequency)
         while self.is_running:
             self.flash_signal.emit()
-            self.msleep(int(1000 * interval))
+            # self.msleep(int(1000 * interval))
+            sleep(interval)
 
     def stop(self):
         self.is_running = False
@@ -52,7 +57,6 @@ class FlashingBox(QOpenGLWidget):
 
     def closeEvent(self, event):
         self.flashing_thread.stop()
-        self.flashing_thread.wait()
 
 
 class GridFlash(QWidget):
@@ -82,12 +86,14 @@ class GridFlash(QWidget):
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.black)
         self.setPalette(p)
+        self.boxes = []
 
         n = 0
         for i in range(rows):
             for j in range(cols):
                 if n < len(frequencies):
                     box = FlashingBox(frequencies[n])
+                    self.boxes.append(box)
                     layout.addWidget(box, i, j)
                     n += 1
 
@@ -111,28 +117,35 @@ class GridFlash(QWidget):
             i.truncate()
 
     def closeEvent(self, event):
+        for b in self.boxes:
+            b.close()
         self.exit_sig.emit()
 
 
-class ToggleThread(QThread):
+class ToggleThread(Thread, QObject):
     flash_signal = pyqtSignal()
 
     def __init__(self, times, dur, start_time):
         super().__init__()
+        super(QObject, self).__init__()
+        self.daemon = True
         self.times = times
         self.dur = dur
         self.is_running = True
         self.start_time = start_time
 
     def run(self):
-        while self.is_running:
-            for t in self.times:
-                while time.time() < self.start_time + t:
-                    self.msleep(100)
+        for t in self.times:
+            while time.time() < self.start_time + t:
+                if not self.is_running:
+                    break
+                sleep(.1)
 
-                self.flash_signal.emit()
-                self.msleep(int(1000 * self.dur))
-                self.flash_signal.emit()
+            self.flash_signal.emit()
+            if not self.is_running:
+                break
+            sleep(self.dur)
+            self.flash_signal.emit()
 
     def stop(self):
         self.is_running = False
@@ -169,8 +182,7 @@ class PromptBox(QOpenGLWidget):
         painter.drawText(rect, Qt.AlignCenter, self.text)
 
     def closeEvent(self, event):
-        self.flashing_thread.stop()
-        self.flashing_thread.wait()
+        self.toggle_thread.stop()
 
 
 class RandomPrompt(QWidget):
@@ -205,6 +217,7 @@ class RandomPrompt(QWidget):
         self.blength = blength
         self.dur = dur
         self.times = self.gen_times()
+        self.stimwidget = None
 
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
@@ -262,6 +275,7 @@ class RandomPrompt(QWidget):
     def start(self):
         self.active = True
         box = PromptBox(self.prompt, self.times, self.dur, time.time())
+        self.stimwidget = box
         self.layout.addWidget(box)
     
     def add_info(self, infopath):
@@ -273,4 +287,6 @@ class RandomPrompt(QWidget):
             i.truncate()
 
     def closeEvent(self, event):
+        if self.stimwidget:
+            self.stimwidget.closeEvent(None)
         self.exit_sig.emit()
