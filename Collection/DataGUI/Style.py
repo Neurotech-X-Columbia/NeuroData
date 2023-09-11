@@ -151,7 +151,7 @@ class RandomPromptMenu(QGridLayout, StimMenu):
         cooldown = float(self.fields.cfield.text())
         dur = float(self.fields.dfield.text())
         if cooldown < dur:
-            return False, "Duration must be shorter than cooldown."
+            return False, "Duration longer than cooldown."
 
         prompt_time = ppb * cooldown
         total_time = int(self.iwindow.fblength.text())
