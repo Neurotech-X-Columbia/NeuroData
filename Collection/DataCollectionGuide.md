@@ -7,9 +7,10 @@ Data collection is at best a long and boring process, so here's a guide to minim
 3. Design your data collection session. Think about the reaction you want to measure and how you will induce it. Also think about how you will record it.
 
 ### Design Considerations
+- What is the session structure? Are you incorporating breaks into your session design? Have you defined a stim cycle?
 - If using a script to generate stimulus, have you tested it on the laptop that'll run it for the session? Have you set up the proper environment?
 - Are there hardware considerations to make (monitor refresh rate, monitor size, brightness, etc.)?
-- How are you recording the data? Using DataGUI.py or one of its binaries is strongly recommended. Have you tested with DataGUI_Boardless? If using another script, make sure to test it and conform to the info.json conventions.
+- How are you recording the data? Using DataGUI.py or one of its binaries is strongly recommended. Have you tested it on your laptop? If using another script, make sure to test it and conform to the info.json conventions.
 - If using OpenBCI's GUI for data collection, make sure to create a session folder in the expected format and an info JSON that describes the session.
 - Who's administering the session and who is undergoing data collection? Does the subject know the purpose and understand the session design?
 
