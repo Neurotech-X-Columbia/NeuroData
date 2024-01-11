@@ -9,4 +9,4 @@ dependencies:
     - pyqt5 == 5.15.7
     - brainflow == 5.9.0
     - nuitka == 1.7.9
-    - redivis == 0.11.1
+    - redivis == 0.12.6

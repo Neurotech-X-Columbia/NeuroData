@@ -36,7 +36,7 @@ def reconstruct_info(row):
         elif key[0] == "_":
             continue
         else:
-            out[key] = val
+            out[key] = str(val)
     return out
 
 
@@ -126,8 +126,7 @@ if args.before_date or args.after_date:
 
     to_remove = []
     for row in rows:
-        rdate = datetime.strptime(row.Date, "%Y-%m-%d")
-        if not adate <= rdate <= bdate:
+        if not adate.date() <= row.Date <= bdate.date():
             to_remove.append(row)
     for r in to_remove:
         rows.remove(r)
@@ -150,7 +149,7 @@ for session in rows:
             session.Description[:17].replace("\n", "") + "...")
     print(session.ProjectName + "\t\t" + session.SubjectName + "\t\t" + 
           str(round(int(session.BlockLength)*int(session.BlockCount), 2))+"s" + "\t\t" + 
-          session.Date + "\t" + desc)
+          str(session.Date) + "\t" + desc)
 
 if input("\nDownload all found sessions and their associated info JSON? (y/N) ") == "y":
     outpath = os.path.abspath("datapackage")
