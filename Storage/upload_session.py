@@ -11,8 +11,8 @@ import redivis
 import sys
 
 DATASET = "neurotechxcolumbia dataset"
-INFO_TABLE = "info_table"
-DATA_TABLE = "data_table"
+INFO_TABLE = "Info Table"
+DATA_TABLE = "Data Table"
 HPARAMS = ("SampleRate", "HeadsetConfiguration", "HeadsetModel", "BufferSize")
 SPARAMS = ("ProjectName", "SubjectName", "ResponseType", "StimulusType",
            "BlockLength", "BlockCount", "StimCycle")
@@ -82,7 +82,7 @@ def info_upload(ds_name, table_name, username, infodct, fname):
 def session_upload(ds_name, table_name, username, datapath, fname):
     dataset = redivis.user(username).dataset(ds_name)
     table = dataset.table(table_name)
-    with open(datapath) as f:
+    with open(datapath, "rb") as f:
         file = table.add_file(fname, f)
 
     return file
