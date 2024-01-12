@@ -10,4 +10,4 @@ for folder in */; do
 
     echo "$folder_name uploaded."
 
-doneq:
+done
