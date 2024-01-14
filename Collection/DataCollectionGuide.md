@@ -29,7 +29,8 @@ Data collection is at best a long and boring process, so here's a guide to minim
 2. Start the system via the GUI. The board should initialize a connection and open to the GUI.
 3. Switch the GUI view to see the head plot (mapping of electrodes on a top-down view of a head) and the time-series data stream. For the electrodes of interest, ensure their time-series 
    channels are _not railed_. Railed channels are saturated at unexpected bounds, so they are probably not recording useful data. To fix railed channels, adjust electrodes in and out until
-   the channel is consistently not railed.
+   the channel is consistently not railed. **When adjusting electrodes, be sure to disconnect the wires _before_ twisting them in and out to avoid breaking them**
+4. 
 
 ### Collection
 1. When you're satisfied that your electrodes are properly aligned, close the OpenBCI GUI. Open the DataGUI from this repo, and fill out the form with your session details.
