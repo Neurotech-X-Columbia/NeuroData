@@ -1,4 +1,4 @@
-## Retrieval Script
+## Upload Script
 ### Usage
 
 ```
