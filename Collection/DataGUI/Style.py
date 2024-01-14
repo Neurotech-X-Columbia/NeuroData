@@ -77,9 +77,9 @@ class GridStimMenu(QGridLayout, StimMenu):
         LabelTuple = namedtuple("LabelTuple", ["minlabel", "maxlabel", "steplabel"])
         
         minfield = QLineEdit()
-        minfield.setValidator(QIntValidator(1, 10000))
+        minfield.setValidator(QDoubleValidator(1, 100, 2))
         maxfield = QLineEdit()
-        maxfield.setValidator(QIntValidator(1, 10000))
+        maxfield.setValidator(QDoubleValidator(1, 100, 2))
         stepfield = QLineEdit()
         self.fields = FieldTuple(minfield, maxfield, stepfield)
 
@@ -97,14 +97,16 @@ class GridStimMenu(QGridLayout, StimMenu):
             return False, "Maximum freq. missing."
         if not self.fields.stepfield.text().strip():
             return False, "Step count missing."
-        if not int(self.fields.minfield.text()) <= int(self.fields.minfield.text()):
+        if not float(self.fields.minfield.text()) <= float(self.fields.minfield.text()):
             return False, "Minimum freq. cannot be greater than maximum freq."
         return True, ""
 
     def get_args(self):
         """Return usable args for running the stim script"""
         rows = cols = math.ceil(math.sqrt(int(self.fields.stepfield.text())))
-        min, max, steps = int(self.fields.minfield.text()), int(self.fields.maxfield.text()), int(self.fields.stepfield.text())
+        min, max, steps = (float(self.fields.minfield.text()),
+                           float(self.fields.maxfield.text()),
+                           int(self.fields.stepfield.text()))
         return linspace(min, max, steps), rows, cols
 
 
